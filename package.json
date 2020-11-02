@@ -7,7 +7,7 @@
     "node": "10.x.x"
   },
   "scripts": {
-    "start": "webpack-dev-server --mode development --hot --open --port $PORT",
+    "start": "node ./src/bot.js --mode development --hot --open --port $PORT",
     "build": "npm i -dev && webpack --mode production",
     "dev": "nodemon ./src/bot.js"
   },

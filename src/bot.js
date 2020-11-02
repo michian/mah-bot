@@ -22,10 +22,10 @@ client.on('message', (message) => {
             .substring(PREFIX.length)
             .split(/\s+/);
 
-        if (CMD_NAME = 'ping') {
+        if (CMD_NAME == 'ping') {
             message.channel.send('pong');
         }
-        if (CMD_NAME = 'help') {
+        if (CMD_NAME == 'help') {
             message.channel.send(':D');
         }
     }
