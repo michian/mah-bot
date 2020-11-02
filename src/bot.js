@@ -1,5 +1,11 @@
 require('dotenv').config();
 
+const search = require('youtube-search');
+const opts = {
+    maxResults: 1,
+    key: process.env.YOUTUBE_BOT_KEY
+  };
+
 const { Client } = require('discord.js');
 const client = new Client();
 const PREFIX = '!';
@@ -26,7 +32,17 @@ client.on('message', (message) => {
             message.channel.send('pong');
         }
         if (CMD_NAME == 'help') {
-            message.channel.send(':D');
+            message.reply('\n' +
+            'Hi! you can use the following commands:' + '\n' +
+            '!yt => search for youtube videos.' + '\n' +
+            'e.x !yt pokemon');
+        }
+
+        if (CMD_NAME == 'yt') {
+            search(args.join(' '), opts, function(err, results) {
+                if(err) return console.log(err);
+              message.channel.send(results[0].link);
+              });
         }
     }
 })
