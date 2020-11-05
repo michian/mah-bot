@@ -19,7 +19,6 @@ client.on('ready', () => {
 client.on('message', (message) => {
     if(message.author.bot) return;
 
-    // console.log(`[${message.author.tag}]: ${message.content}`);
     if (message.content == 'hello') {
         message.channel.send('hello!');
     }
@@ -37,8 +36,9 @@ client.on('message', (message) => {
         if (CMD_NAME == 'help') {
             message.reply('```ini\n' +
             'Hi! You can use the following commands ㋡ ' + '\n\n' +
-            '[ !youtube  => search for youtube videos ]' + '\n' +
-            '[ !quote    => random quote ]'
+            '[ !youtube    => search for youtube videos ]' + '\n' +
+            '[ !quote      => random quote ]' + '\n' +
+            '[ !quote tech => random quote ]'
             + '\n```');
         }
 
@@ -54,15 +54,28 @@ client.on('message', (message) => {
         }
 
         if (CMD_NAME == 'quote') {
-            request.get("https://api.forismatic.com/api/1.0/?method=getQuote&format=json&param=ms&lang=en",
-            (error, response, body) => {
-                if(error) {
-                    return console.dir(error);
-                }
-                const quote = (JSON.parse(body))['quoteText'];
-                const resp = "```" + quote + "```";
-                message.channel.send(resp);
-            });
+
+            if(args[0] == 'tech') {
+                request.get("http://quotes.stormconsultancy.co.uk/random.json",
+                (error, response, body) => {
+                    if(error) {
+                        return console.dir(error);
+                    }
+                    const quote = (JSON.parse(body))['quote'];
+                    const resp = "```" + quote + "```";
+                    message.channel.send(resp);
+                });
+            } else {
+                request.get("https://api.forismatic.com/api/1.0/?method=getQuote&format=json&param=ms&lang=en",
+                (error, response, body) => {
+                    if(error) {
+                        return console.dir(error);
+                    }
+                    const quote = (JSON.parse(body))['quoteText'];
+                    const resp = "```" + quote + "```";
+                    message.channel.send(resp);
+                });
+            }
         }
     }
 })
