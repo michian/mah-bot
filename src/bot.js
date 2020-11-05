@@ -54,7 +54,6 @@ client.on('message', (message) => {
         }
 
         if (CMD_NAME == 'quote') {
-
             if(args[0] == 'tech') {
                 request.get("http://quotes.stormconsultancy.co.uk/random.json",
                 (error, response, body) => {
