@@ -37,8 +37,8 @@ client.on('message', (message) => {
             message.reply('```ini\n' +
             'Hi! You can use the following commands ㋡ ' + '\n\n' +
             '[ !youtube    => search for youtube videos ]' + '\n' +
-            '[ !quote      => random quote ]' + '\n' +
-            '[ !quote tech => random quote ]'
+            '[ !quote      => random quotes ]' + '\n' +
+            '[ !quote tech => tech quotes ]'
             + '\n```');
         }
 
