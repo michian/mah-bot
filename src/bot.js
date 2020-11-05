@@ -1,6 +1,8 @@
 require('dotenv').config();
 
 const search = require('youtube-search');
+const request = require("request");
+
 const opts = {
     maxResults: 1,
     key: process.env.YOUTUBE_BOT_KEY
@@ -31,18 +33,36 @@ client.on('message', (message) => {
         if (CMD_NAME == 'ping') {
             message.channel.send('pong');
         }
+
         if (CMD_NAME == 'help') {
-            message.reply('\n' +
-            'Hi! you can use the following commands:' + '\n' +
-            '!yt => search for youtube videos.' + '\n' +
-            'e.x !yt pokemon');
+            message.reply('```ini\n' +
+            'Hi! You can use the following commands ㋡ ' + '\n\n' +
+            '[ !youtube  => search for youtube videos ]' + '\n' +
+            '[ !quote    => random quote ]'
+            + '\n```');
         }
 
-        if (CMD_NAME == 'yt') {
+        if (CMD_NAME == 'youtube') {
             search(args.join(' '), opts, function(err, results) {
-                if(err) return console.log(err);
-              message.channel.send(results[0].link);
+                if(args.length == 0) {
+                    message.reply('```\nuse this format\n'
+                    + '!youtube pokemon song```')
+                } else {
+                    message.channel.send(results[0].link);
+                };
               });
+        }
+
+        if (CMD_NAME == 'quote') {
+            request.get("https://api.forismatic.com/api/1.0/?method=getQuote&format=json&param=ms&lang=en",
+            (error, response, body) => {
+                if(error) {
+                    return console.dir(error);
+                }
+                const quote = (JSON.parse(body))['quoteText'];
+                const resp = "```" + quote + "```";
+                message.channel.send(resp);
+            });
         }
     }
 })
